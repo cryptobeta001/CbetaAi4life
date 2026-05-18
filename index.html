@@ -1,402 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Your Name | AI Portfolio</title>
-  <meta name="description" content="Futuristic AI portfolio website" />
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    :root {
-      --bg: #050816;
-      --card: rgba(255,255,255,0.06);
-      --border: rgba(255,255,255,0.12);
-      --text: #ffffff;
-      --muted: #94a3b8;
-      --accent: #00f5ff;
-      --accent2: #8b5cf6;
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      font-family: 'Inter', sans-serif;
-      color: var(--text);
-      background:
-        radial-gradient(circle at 20% 20%, rgba(0,245,255,0.08), transparent 40%),
-        radial-gradient(circle at 80% 30%, rgba(139,92,246,0.08), transparent 35%),
-        radial-gradient(circle at 50% 80%, rgba(0,245,255,0.05), transparent 35%),
-        var(--bg);
-      overflow-x: hidden;
-    }
-
-    .wave-bg {
-      position: fixed;
-      inset: 0;
-      z-index: -1;
-      overflow: hidden;
-      opacity: 0.45;
-    }
-
-    .wave {
-      position: absolute;
-      top: 50%; left: 50%; transform: translate(-50%, -50%);
-      width: 70vmin; height: 70vmin;
-      border: 1px solid rgba(0,245,255,0.15);
-      border-radius: 50%;
-      animation: pulse 6s infinite ease-in-out;
-      filter: blur(0.3px);
-    }
-
-    .wave:nth-child(2) { width: 85vmin; height: 85vmin; animation-delay: 1s; }
-    .wave:nth-child(3) { width: 100vmin; height: 100vmin; animation-delay: 2s; }
-    .wave:nth-child(4) { width: 115vmin; height: 115vmin; animation-delay: 3s; }
-
-    @keyframes pulse {
-      0%,100% { transform: translate(-50%, -50%) scale(0.96); opacity: 0.2; }
-      50% { transform: translate(-50%, -50%) scale(1.05); opacity: 0.8; }
-    }
-
-    .sound-bars {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
-      pointer-events: none;
-      opacity: 0.15;
-    }
-
-    .bar {
-      width: 3px;
-      background: linear-gradient(to top, var(--accent), transparent);
-      border-radius: 999px;
-      animation: equalizer 1.2s infinite ease-in-out;
-    }
-
-    @keyframes equalizer {
-      0%,100% { height: 20px; }
-      50% { height: 120px; }
-    }
-
-    .container {
-      width: min(1100px, calc(100% - 2rem));
-      margin: 0 auto;
-    }
-
-    nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      backdrop-filter: blur(18px);
-      background: rgba(5,8,22,0.65);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .nav-inner {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem 0;
-    }
-
-    .logo {
-      font-weight: 800;
-      letter-spacing: 0.2em;
-      font-size: 0.9rem;
-      color: var(--accent);
-      text-transform: uppercase;
-    }
-
-    .nav-links a {
-      color: var(--muted);
-      text-decoration: none;
-      margin-left: 1.5rem;
-      transition: 0.3s;
-    }
-
-    .nav-links a:hover { color: var(--accent); }
-
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      text-align: center;
-      position: relative;
-    }
-
-    .glass {
-      background: var(--card);
-      border: 1px solid var(--border);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-radius: 24px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.35);
-    }
-
-    .hero-card {
-      padding: 4rem 2rem;
-    }
-
-    .tag {
-      display: inline-block;
-      padding: 0.5rem 1rem;
-      border-radius: 999px;
-      border: 1px solid rgba(0,245,255,0.25);
-      color: var(--accent);
-      font-size: 0.8rem;
-      margin-bottom: 1.5rem;
-    }
-
-    h1 {
-      font-size: clamp(3rem, 9vw, 7rem);
-      font-weight: 800;
-      line-height: 1;
-      margin-bottom: 1rem;
-    }
-
-    .gradient {
-      background: linear-gradient(90deg, #00f5ff, #8b5cf6);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .subtitle {
-      font-size: clamp(1.1rem, 3vw, 1.8rem);
-      color: var(--muted);
-      margin-bottom: 1.5rem;
-    }
-
-    .description {
-      max-width: 700px;
-      margin: 0 auto 2rem;
-      color: var(--muted);
-      line-height: 1.8;
-    }
-
-    .buttons {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      padding: 0.9rem 1.8rem;
-      border-radius: 999px;
-      text-decoration: none;
-      font-weight: 600;
-      transition: 0.3s;
-    }
-
-    .btn-primary {
-      background: linear-gradient(90deg, #00f5ff, #8b5cf6);
-      color: #000;
-    }
-
-    .btn-secondary {
-      border: 1px solid var(--border);
-      color: white;
-    }
-
-    .btn:hover { transform: translateY(-3px); }
-
-    section {
-      padding: 6rem 0;
-    }
-
-    h2 {
-      font-size: 2.5rem;
-      margin-bottom: 2rem;
-      text-align: center;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1.5rem;
-    }
-
-    .card {
-      padding: 2rem;
-    }
-
-    .card h3 {
-      margin-bottom: 0.75rem;
-      color: var(--accent);
-    }
-
-    .card p {
-      color: var(--muted);
-      line-height: 1.7;
-    }
-
-    footer {
-      text-align: center;
-      padding: 3rem 0;
-      color: var(--muted);
-      border-top: 1px solid var(--border);
-    }
-
-    @media (max-width: 768px) {
-      .nav-links { display: none; }
-      .hero-card { padding: 3rem 1.5rem; }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Portfolio</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <div class="wave-bg">
-    <div class="wave"></div>
-    <div class="wave"></div>
-    <div class="wave"></div>
-    <div class="wave"></div>
-    <div class="sound-bars" id="bars"></div>
-  </div>
-
+<header>
+  <div class="logo">YourName</div>
   <nav>
-    <div class="container nav-inner">
-      <div class="logo">AI.PORTFOLIO</div>
-      <div class="nav-links">
-        <a href="#about">About</a>
-        <a href="#services">Services</a>
-        <a href="#projects">Projects</a>
-        <a href="#contact">Contact</a>
-      </div>
-    </div>
+    <a href="#about">About</a>
+    <a href="#projects">Projects</a>
+    <a href="#contact">Contact</a>
   </nav>
+</header>
 
-  <section class="hero">
-    <div class="container">
-      <div class="glass hero-card">
-        <div class="tag">Futuristic AI Portfolio</div>
-        <h1>[Your Name]</h1>
-        <div class="subtitle gradient">AI Automation Engineer • Web3 Specialist • 3D Motion Visualist</div>
-        <p class="description">
-          I build AI automations, cinematic videos, and next-generation digital experiences for startups, creators, and Web3 projects.
-        </p>
-        <div class="buttons">
-          <a href="#projects" class="btn btn-primary">View Projects</a>
-          <a href="#contact" class="btn btn-secondary">Hire Me</a>
-        </div>
-      </div>
-    </div>
-  </section>
+<section class="hero">
+  <h1>AI Automation & Web3 Specialist</h1>
+  <p>Building intelligent systems, bots, and modern web experiences.</p>
+  <a href="#contact" class="btn">Hire Me</a>
+</section>
 
-  <section id="about">
-    <div class="container">
-      <h2 class="gradient">About Me</h2>
-      <div class="glass card">
-        <p>
-          I specialize in AI automation using n8n, crypto research, and cinematic content creation. My focus is building intelligent systems and premium digital experiences.
-        </p>
-      </div>
-    </div>
-  </section>
+<section id="about">
+  <h2>About Me</h2>
+  <p>Write your short professional introduction here. Skilled in AI automation, n8n, crypto, and web development.</p>
+</section>
 
-  <section id="services">
-    <div class="container">
-      <h2 class="gradient">Services</h2>
-      <div class="grid">
-        <div class="glass card">
-          <h3>AI Automation</h3>
-          <p>Custom n8n workflows, chatbots, and business automation systems.</p>
-        </div>
-        <div class="glass card">
-          <h3>Portfolio Websites</h3>
-          <p>Modern, high-converting personal and business websites.</p>
-        </div>
-        <div class="glass card">
-          <h3>AI Video Creation</h3>
-          <p>Pixar-style animations, storytelling, and promotional videos.</p>
-        </div>
-      </div>
-    </div>
-  </section>
+<section id="projects">
+  <h2>Projects</h2>
+  <div class="grid">
+    <div class="card">Project 1</div>
+    <div class="card">Project 2</div>
+    <div class="card">Project 3</div>
+  </div>
+</section>
 
-  <section id="projects">
-    <div class="container">
-      <h2 class="gradient">Projects</h2>
-      <div class="grid">
-        <div class="glass card">
-          <h3>AI Crypto Research Agent</h3>
-          <p>Automated market intelligence and token analysis.</p>
-        </div>
-        <div class="glass card">
-          <h3>Animated Story Generator</h3>
-          <p>AI-powered 3D storytelling workflow.</p>
-        </div>
-        <div class="glass card">
-          <h3>Client Automation Suite</h3>
-          <p>Lead generation and CRM automations.</p>
-        </div>
-      </div>
-    </div>
-  </section>
+<section id="contact">
+  <h2>Contact</h2>
+  <p>Email: your@email.com</p>
+</section>
 
-  <section id="contact">
-    <div class="container">
-      <h2 class="gradient">Contact</h2>
-      <div class="glass card" style="text-align:center;">
-        <p>Email: [your@email.com]</p>
-        <p>LinkedIn: [Your LinkedIn]</p>
-        <p>GitHub: [Your GitHub]</p>
-      </div>
-    </div>
-  </section>
+<footer>
+  <p>© 2026 YourName. All rights reserved.</p>
+</footer>
 
-  <footer>
-    © 2026 [Your Name]. Built with AI.
-  </footer>
-
-  <script>
-    const bars = document.getElementById('bars');
-    for (let i = 0; i < 80; i++) {
-      const bar = document.createElement('div');
-      bar.className = 'bar';
-      bar.style.animationDelay = `${Math.random() * 1.5}s`;
-      bar.style.height = `${20 + Math.random() * 80}px`;
-      bars.appendChild(bar);
-    }
-  </script>
-
+<script src="script.js"></script>
 </body>
 </html>
-```
-
----
-
-## How to Upload to GitHub
-
-1. Create a repository named `portfolio`.
-2. Upload this file as `index.html`.
-3. Go to repository **Settings → Pages**.
-4. Under **Source**, select **Deploy from a branch**.
-5. Choose **main** branch and `/root`.
-6. Save.
-
-Your site will be live at:
-
-```text
-https://yourusername.github.io/portfolio/
-```
-
----
-
-## Edit These Placeholders
-
-Replace:
-
-* `[Your Name]`
-* `[your@email.com]`
-* `[Your LinkedIn]`
-* `[Your GitHub]`
-
-with your real details.
